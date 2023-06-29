@@ -9,6 +9,7 @@ import com.yiddemoroom.model.Station;
 import com.yiddemoroom.model.Task;
 import com.yiddemoroom.service.AnalysisService;
 import com.yiddemoroom.service.HomePageService;
+import com.yiddemoroom.service.SendTaskService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,9 @@ public class ApiController {
     
     @Autowired
     private AnalysisService analysisService;
+    
+    @Autowired
+    private SendTaskService sendTaskService;
     
     @RequestMapping(value = "/homepage/agvlist", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     public String getAGVList(){
@@ -137,6 +141,12 @@ public class ApiController {
                 break;
         }
         return gson.toJson(list);
+    }
+    
+    @RequestMapping(value = "/sendTask", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String sendTask(@RequestParam("agv") String agv, @RequestParam("start") String start,
+                            @RequestParam("terminal") String terminal, @RequestParam("mode") String mode, @RequestParam("time") String time){
+        return sendTaskService.insertTask(time, agv, start, terminal, mode) ? "OK" : "FAIL";
     }
     /*
     static int tempId;

@@ -28,7 +28,7 @@ function setAGVList() {
 function addAGVList(agvList){
     var agvListHTML="";
     for(let i=0;i<agvList.length;i++){
-        agvListHTML += '<div id="agv'+(i+1)+'" class="col-auto sendCard agv" onclick="select(this)">' +
+        agvListHTML += '<div data-id="'+(i+1)+'" class="col-auto sendCard agv" onclick="select(this)">' +
                         '<div class="row"><div class="col cardInfo"><div class="row"><div class="col">' +
                         '<p class="title AGVTitle" id="AGV'+(i+1)+'Title">'+agvList[i].name+'</p></div></div><div class="row"><div class="col">' +
                         '<p class="AGVName" id="AGV'+(i+1)+'Name">'+agvList[i].memo+'</p></div></div></div><div class="col cardImg">' +
@@ -56,12 +56,12 @@ function addStationList(stationList){
     var startListHTML="";
     var terminalListHTML="";
     for(let i=0;i<stationList.length;i++){
-        startListHTML += '<div id="start'+(i+1)+'" class="col-auto sendCard station start" onclick="select(this)">' +
+        startListHTML += '<div data-id="'+stationList[i].tag+'" class="col-auto sendCard station start" onclick="select(this)">' +
                          '<div class="row"><div class="col cardInfo"><div class="row"><div class="col"><p class="title stationTitle">' +
                          stationList[i].name + '</p></div></div><div class="row"><div class="col"><p class="stationContent">' +
                          stationList[i].memo + '</p></div></div></div></div></div>';
 
-        terminalListHTML += '<div id="ternimal'+(i+1)+'" class="col-auto sendCard station terminal" onclick="select(this)">' +
+        terminalListHTML += '<div data-id="'+stationList[i].tag+'" class="col-auto sendCard station terminal" onclick="select(this)">' +
                             '<div class="row"><div class="col cardInfo"><div class="row"><div class="col"><p class="title stationTitle">' +
                             stationList[i].name + '</p></div></div><div class="row"><div class="col"><p class="stationContent">' +
                             stationList[i].memo + '</p></div></div></div></div></div>';
@@ -83,13 +83,13 @@ function select(obj){
         objClass += "." + obj.classList[i];
         switch (obj.classList[i]) {
             case "agv":
-                sendContent.agv = obj.getAttribute("id");
+                sendContent.agv = obj.getAttribute("data-id");
                 break;
             case "start":
-                sendContent.start = obj.getAttribute("id");
+                sendContent.start = obj.getAttribute("data-id");
                 break;
             case "terminal":
-                sendContent.terminal = obj.getAttribute("id");
+                sendContent.terminal = obj.getAttribute("data-id");
                 break;
             case "mode":
                 sendContent.mode = obj.getAttribute("id");
@@ -115,7 +115,18 @@ function sendTask(){
 
     var cnt = ("Send Task contants:"+"\nAGV: "+sendContent.agv+"\nStart: "+sendContent.start+
                 "\nTerminal: "+sendContent.terminal+"\nMode: "+sendContent.mode+"\nTime: "+nowTime);
-    alert(cnt);
+    // alert(cnt);
+    xhr.open('GET', baseUrl + "/api/sendTask?agv="+sendContent.agv+"&start="+sendContent.start+
+                "&terminal="+sendContent.terminal+"&mode="+sendContent.mode+"&time="+nowTime, true);
+    xhr.send();
+    xhr.onload = function(){
+        if(xhr.status == 200){
+            if(this.responseText == 'OK')
+                alert("成功發送任務\n"+cnt);
+            else
+                alert("發送任務失敗");
+        }
+    };
     window.location.reload();
     // console.log("Send Task contants:");
     // console.log("AGV: "+sendContent.agv);

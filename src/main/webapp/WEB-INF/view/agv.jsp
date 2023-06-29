@@ -6,7 +6,9 @@
     <head>
         <title>元創智動系統</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <!-- BootStrap框架 -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+        <!-- YID CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/yid.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/yiddemoroom.css">
         
@@ -31,12 +33,12 @@
                 }
             }
         </style>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0"></script>
-        <script src="https://bootstrap5.hexschool.com/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/bootstrap-table.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/chart.js@4.3.0"></script>
+        <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
         <script>
             var contextPath = '${pageContext.request.contextPath}';
         </script>
@@ -224,10 +226,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <div id="taskQueue" class="col taskQueue"></div>
-                    <div id="notification" class="col"></div>
-                </div> -->
                 <footer>元創智動股份有限公司版權所有 TEL:02-26087894 Email:sales@yid.com.tw</footer>                    
             </div>
         </main>

@@ -27,4 +27,17 @@ public class TaskDao {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Task.class));
     }
     
+    public String selectLastTaskNumber(){
+        String sql = "SELECT task_number FROM task_history ORDER BY task_number DESC LIMIT 1;";
+        return jdbcTemplate.queryForObject(sql, String.class);
+    }
+    
+    public boolean insertTask(String taskNumber, String creatTime, String agv, String start, String terminal,String mode){
+        String sql = "INSERT INTO `task_history`(`task_number`, `create_task_time`, `agv_id`, `start_id`, `terminal_id`, `mode_id`) \n" +
+"					VALUES(?, ?, ?, ?, ?, ?);)";
+
+        // 使用 JdbcTemplate 的 update 方法執行 SQL 語句
+        int rowsAffected = jdbcTemplate.update(sql, taskNumber, creatTime, agv, start, terminal, mode);
+        return (rowsAffected > 0);
+    }
 }

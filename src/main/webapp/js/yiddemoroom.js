@@ -2,6 +2,7 @@ var xhr = new XMLHttpRequest();
 var baseUrl = contextPath + '/mvc';
 var agvList;
 // var stations = {1: 'Station1', 2: 'Station2', 3: 'Station3', 4: 'Station4'};
+// taskprogress <div class=\"progress\"><div id=\"taskProgress"+tasks[i].taskNumber+"\" class=\"progress-bar\" /*style=\"width: 30%;\"*/></div></div>
 var stations;
 var agvListImg = {1: "agv_250.png", 2: "agv_250.png", 3: "agv_250.png"};
 window.onresize =  function(){
@@ -191,6 +192,7 @@ function getStations() {
 
 function setTasks() {
     return new Promise((resolve, reject) => {
+        // xhr.open('GET', baseUrl + "/api/homepage/task/today", true);
         xhr.open('GET', baseUrl + "/api/homepage/tasks", true);
         xhr.send();
         xhr.onload = function(){
@@ -207,26 +209,29 @@ function setTasks() {
 
 function addTasks(tasks){  // 更新資料
     var tasksHTML = "";
-    for(let i=0;i<tasks.length;i++){
-        var datetime = tasks[i].createTaskTime;
-        var year = datetime.substring(0, 4);
-        var month = datetime.substring(4, 6);
-        var day = datetime.substring(6, 8);
-        var hour = datetime.substring(8, 10);
-        var minute = datetime.substring(10, 12);
-        var second = datetime.substring(12, 14);
-        var st;
-        if(tasks[i].startId)
-            st = stations[tasks[i].startId-1].name;
-        else 
-            st= 'undefined';
-        tasksHTML += "<div class=\"row task\"><div class=\"col agvTask\"><div class=\"row\"><div class=\"col\"><div class=\"row taskTitle\"><div class=\"col\">" +
-                    "<p>"+tasks[i].taskNumber+"</p></div></div><div class=\"row taskContent\"><div class=\"col\">" +
-                    "<p>AGV: "+agvList[tasks[i].agvId-1].name+"</p><p>Start: "+st+"</p><p>End: "+stations[tasks[i].terminalId-1].name+"</p></div></div></div><div class=\"col-6\"><div class=\"row taskTB\">" +
-                    "<div class=\"col-5 taskBar\"><div class=\"progress\"><div id=\"taskProgress"+tasks[i].taskNumber+"\" class=\"progress-bar\" /*style=\"width: 30%;\"*/></div></div></div>" +
-                    "<div class=\"col-5\"><div class=\"row\"><div class=\"col\"><labe class=\"right\">"+year+"/"+month+"/"+day+"</label></div></div><div class=\"row\">" +
-                    "<div class=\"col\"><label class=\"right\">"+hour+":"+minute+":"+second+"</label></div></div></div><div class=\"col-2\"><button type=\"button\" onclick=\"alert(\'remove: "+tasks[i].taskNumber+"\')\" class=\"btn btn-danger right\">" +
-                    "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" style=\"fill: white;\"><use xlink:href=\"#trash\"/></svg></button></div></div></div></div></div></div>";
+    if (!tasks.length){
+        tasksHTML = '<h1 style="color: #C9C9C9;float: center;">目前沒有任務</h1>';
+    }else{
+        for(let i=0;i<tasks.length;i++){
+            var datetime = tasks[i].createTaskTime;
+            var year = datetime.substring(0, 4);
+            var month = datetime.substring(4, 6);
+            var day = datetime.substring(6, 8);
+            var hour = datetime.substring(8, 10);
+            var minute = datetime.substring(10, 12);
+            var second = datetime.substring(12, 14);
+            var st;
+            if(tasks[i].startId)
+                st = stations[tasks[i].startId-1].name;
+            else 
+                st= 'undefined';
+            tasksHTML += "<div class=\"row task\"><div class=\"col agvTask\"><div class=\"row\"><div class=\"col\"><div class=\"row taskTitle\"><div class=\"col\">" +
+                        "<p>"+tasks[i].taskNumber+"</p></div></div><div class=\"row taskContent\"><div class=\"col\">" +
+                        "<p>AGV: "+agvList[tasks[i].agvId-1].name+"</p><p>Start: "+st+"</p><p>End: "+stations[tasks[i].terminalId-1].name+"</p></div></div></div><div class=\"col-6\"><div class=\"row taskTB\">" +
+                        "<div id=progressDiv\"tasks[i].taskNumber\" class=\"col-5 taskBar\"></div><div class=\"col-5\"><div class=\"row\"><div class=\"col\"><labe class=\"right\">"+year+"/"+month+"/"+day+"</label></div></div><div class=\"row\">" +
+                        "<div class=\"col\"><label class=\"right\">"+hour+":"+minute+":"+second+"</label></div></div></div><div class=\"col-2\"><button type=\"button\" onclick=\"alert(\'remove: "+tasks[i].taskNumber+"\')\" class=\"btn btn-danger right\">" +
+                        "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" style=\"fill: white;\"><use xlink:href=\"#trash\"/></svg></button></div></div></div></div></div></div>";
+        }
     }
     document.getElementById("taskQueue").innerHTML = tasksHTML;
 }
