@@ -13,6 +13,9 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/yiddemoroom.css">
         
         <style>
+            ::-webkit-scrollbar{
+                display:none;
+            }
             @media screen and (max-width: 1197px) {
                 .AGVTask{display:none;}
             }
@@ -70,7 +73,7 @@
                 <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
             </symbol>
             <symbol id="wifi-unconnect" viewBox="0 0 16 16">
-            <path d="M10.706 3.294A12.545 12.545 0 0 0 8 3C5.259 3 2.723 3.882.663 5.379a.485.485 0 0 0-.048.736.518.518 0 0 0 .668.05A11.448 11.448 0 0 1 8 4c.63 0 1.249.05 1.852.148l.854-.854zM8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065 8.448 8.448 0 0 1 3.51-1.27L8 6zm2.596 1.404.785-.785c.63.24 1.227.545 1.785.907a.482.482 0 0 1 .063.745.525.525 0 0 1-.652.065 8.462 8.462 0 0 0-1.98-.932zM8 10l.933-.933a6.455 6.455 0 0 1 2.013.637c.285.145.326.524.1.75l-.015.015a.532.532 0 0 1-.611.09A5.478 5.478 0 0 0 8 10zm4.905-4.905.747-.747c.59.3 1.153.645 1.685 1.03a.485.485 0 0 1 .047.737.518.518 0 0 1-.668.05 11.493 11.493 0 0 0-1.811-1.07zM9.02 11.78c.238.14.236.464.04.66l-.707.706a.5.5 0 0 1-.707 0l-.707-.707c-.195-.195-.197-.518.04-.66A1.99 1.99 0 0 1 8 11.5c.374 0 .723.102 1.021.28zm4.355-9.905a.53.53 0 0 1 .75.75l-10.75 10.75a.53.53 0 0 1-.75-.75l10.75-10.75z"/>
+                <path d="M10.706 3.294A12.545 12.545 0 0 0 8 3C5.259 3 2.723 3.882.663 5.379a.485.485 0 0 0-.048.736.518.518 0 0 0 .668.05A11.448 11.448 0 0 1 8 4c.63 0 1.249.05 1.852.148l.854-.854zM8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065 8.448 8.448 0 0 1 3.51-1.27L8 6zm2.596 1.404.785-.785c.63.24 1.227.545 1.785.907a.482.482 0 0 1 .063.745.525.525 0 0 1-.652.065 8.462 8.462 0 0 0-1.98-.932zM8 10l.933-.933a6.455 6.455 0 0 1 2.013.637c.285.145.326.524.1.75l-.015.015a.532.532 0 0 1-.611.09A5.478 5.478 0 0 0 8 10zm4.905-4.905.747-.747c.59.3 1.153.645 1.685 1.03a.485.485 0 0 1 .047.737.518.518 0 0 1-.668.05 11.493 11.493 0 0 0-1.811-1.07zM9.02 11.78c.238.14.236.464.04.66l-.707.706a.5.5 0 0 1-.707 0l-.707-.707c-.195-.195-.197-.518.04-.66A1.99 1.99 0 0 1 8 11.5c.374 0 .723.102 1.021.28zm4.355-9.905a.53.53 0 0 1 .75.75l-10.75 10.75a.53.53 0 0 1-.75-.75l10.75-10.75z"/>
             </symbol>
             <symbol id="wifi-1" viewBox="0 0 16 16">
                 <path d="M11.046 10.454c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.407.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.611-.091l.015-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .707 0l.708-.707z"/>
@@ -113,12 +116,55 @@
             <symbol id="agv" viewBox="0 0 1792 1792">
                 <path d="M187.8,1659L896,132.9L1604.2,1659L896,1285.5L187.8,1659z"/>
             </symbol>
+            <symbol id="battery-error" viewBox="0 0 640 512">
+                <g class="layer">
+                    <path d="m544,160l0,64l32,0l0,64l-32,0l0,64l-480,0l0,-192l480,0m16,-64l-512,0c-26.51,0 -48,21.49 -48,48l0,224c0,26.51 21.49,48 48,48l512,0c26.51,0 48,-21.49 48,-48l0,-16l8,0c13.25,0 24,-10.75 24,-24l0,-144c0,-13.25 -10.75,-24 -24,-24l-8,0l0,-16c0,-26.51 -21.49,-48 -48,-48z" id="svg_1" stroke-width="38"></path>
+                    <line stroke="#FFFFFF" id="svg_2" stroke-width="50" x1="81.5" x2="553.5" y1="34" y2="483"></line>
+                </g>
+            </symbol>
+            <symbol id="battery-charging" viewBox="0 0 200 160">
+                    <defs>
+                     <symbol height="512" id="svg_5" width="640" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                      <g class="layer">
+                       <path d="m937,146l0,64l32,0l0,64l-32,0l0,64l-480,0l0,-192l480,0m16,-64l-512,0c-26.51,0 -48,21.49 -48,48l0,224c0,26.51 21.49,48 48,48l512,0c26.51,0 48,-21.49 48,-48l0,-16l8,0c13.25,0 24,-10.75 24,-24l0,-144c0,-13.25 -10.75,-24 -24,-24l-8,0l0,-16c0,-26.51 -21.49,-48 -48,-48z" id="svg_3"></path>
+                       <rect fill="#7CBD42" height="0" id="svg_2" stroke="#7CBD42" width="0" x="-180.5" y="99.5"></rect>
+                      </g>
+                     </symbol>
+                     <symbol height="512" id="svg_9" width="640" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                      <g class="layer">
+                       <path d="m161,124l0,64l32,0l0,64l-32,0l0,64l-480,0l0,-192l480,0m16,-64l-512,0c-26.51,0 -48,21.49 -48,48l0,224c0,26.51 21.49,48 48,48l512,0c26.51,0 48,-21.49 48,-48l0,-16l8,0c13.25,0 24,-10.75 24,-24l0,-144c0,-13.25 -10.75,-24 -24,-24l-8,0l0,-16c0,-26.51 -21.49,-48 -48,-48z" id="svg_8"></path>
+                       <rect fill="#7CBD42" height="0" id="svg_7" stroke="#7CBD42" width="0" x="-180.5" y="99.5"></rect>
+                      </g>
+                     </symbol>
+                    </defs>
+                    <g>
+                     <rect fill="#7CBD42" height="0" id="svg_4" stroke="#7CBD42" width="0" x="-180.5" y="99.5"></rect>
+                     <use id="svg_6" transform="matrix(0.266667 0 0 0.266667 0 -1)" x="-390" xlink:href="#svg_5" y="52.5"></use>
+                     <use id="svg_10" transform="matrix(0.266667 0 0 0.266667 -32 -159)" x="611.25" xlink:href="#svg_9" y="667.5"></use>
+                     <path d="m83.37,10.07l23.95,34.96l-9.88,4.12l30.17,29.96l-9.88,5l37.29,50.16l-63.25,-38.44l12.06,-5.34l-39.3,-24.62l14.08,-7.61l-41.49,-25.83l46.24,-22.37z" fill="#7CBD42" id="svg_13" transform="rotate(31.3162 96.0725 72.1675)"></path>
+                    </g>
+            </symbol>
+            <symbol id="battery-0" viewBox="0 0 640 512">
+                <path fill="#FF0000" d="M544 160v64h32v64h-32v64H64V160h480m16-64H48c-26.51 0-48 21.49-48 48v224c0 26.51 21.49 48 48 48h512c26.51 0 48-21.49 48-48v-16h8c13.255 0 24-10.745 24-24V184c0-13.255-10.745-24-24-24h-8v-16c0-26.51-21.49-48-48-48z"/>
+            </symbol>
+            <symbol id="battery-1" viewBox="0 0 640 512">
+                <path fill="#EAC343" d="M544 160v64h32v64h-32v64H64V160h480m16-64H48c-26.51 0-48 21.49-48 48v224c0 26.51 21.49 48 48 48h512c26.51 0 48-21.49 48-48v-16h8c13.255 0 24-10.745 24-24V184c0-13.255-10.745-24-24-24h-8v-16c0-26.51-21.49-48-48-48zm-336 96H96v128h128V192z"/>
+            </symbol>
+            <symbol id="battery-2" viewBox="0 0 640 512">
+                <path d="M544 160v64h32v64h-32v64H64V160h480m16-64H48c-26.51 0-48 21.49-48 48v224c0 26.51 21.49 48 48 48h512c26.51 0 48-21.49 48-48v-16h8c13.255 0 24-10.745 24-24V184c0-13.255-10.745-24-24-24h-8v-16c0-26.51-21.49-48-48-48zm-240 96H96v128h224V192z"/>
+            </symbol>
+            <symbol id="battery-3" viewBox="0 0 640 512">
+                <path d="M544 160v64h32v64h-32v64H64V160h480m16-64H48c-26.51 0-48 21.49-48 48v224c0 26.51 21.49 48 48 48h512c26.51 0 48-21.49 48-48v-16h8c13.255 0 24-10.745 24-24V184c0-13.255-10.745-24-24-24h-8v-16c0-26.51-21.49-48-48-48zm-144 96H96v128h320V192z" />
+            </symbol>
+            <symbol id="battery-4" viewBox="0 0 640 512">
+                <path d="M544 160v64h32v64h-32v64H64V160h480m16-64H48c-26.51 0-48 21.49-48 48v224c0 26.51 21.49 48 48 48h512c26.51 0 48-21.49 48-48v-16h8c13.255 0 24-10.745 24-24V184c0-13.255-10.745-24-24-24h-8v-16c0-26.51-21.49-48-48-48zm-48 96H96v128h416V192z"/>
+            </symbol>
             <!-- <symbol id="agv" viewBox="0 0 24 24">
                     <path d="M20,10h-.341L17.18,4.214A2,2,0,0,0,15.341,3H4.754A2.008,2.008,0,0,0,2.831,4.451L1.038,10.726a1.019,1.019,0,0,0-.005.111A.889.889,0,0,0,1,11v5a2,2,0,0,0,2,2h.142a3.981,3.981,0,0,0,7.716,0h2.284a3.981,3.981,0,0,0,7.716,0H21a2,2,0,0,0,2-2V13A3,3,0,0,0,20,10ZM12,5h3.341l2.142,5H12ZM4.754,5H10v5H3.325ZM7,19a2,2,0,1,1,2-2A2,2,0,0,1,7,19Zm10,0a2,2,0,1,1,2-2A2,2,0,0,1,17,19Zm4-3h-.142a3.981,3.981,0,0,0-7.716,0H10.858a3.981,3.981,0,0,0-7.716,0H3V12H20a1,1,0,0,1,1,1Z"/>
             </symbol> -->
         </svg>
         <main>
-            <div class="d-flex flex-column flex-shrink-0 bg-dark" style="width: 5em;min-height: 100%;position: fixed;">
+            <div class="d-flex flex-column flex-shrink-0" style="width: 5em;min-height: 100%;position: fixed;">
                 <a href="https://www.yid.com.tw/" class="d-block p-3 link-dark text-center">
                     <svg class="bi" width="32" height="32"><use xlink:href="#yid"/></svg>
                     <span class="visually-hidden">Icon-only</span>
@@ -126,7 +172,7 @@
                 <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/mvc/agv/" class="nav-link active py-3">
-                            <svg class="bi" width="24" height="24" role="img"><use xlink:href="#home"/></svg>
+                            <svg class="bi" width="24" height="24" role="img" style="fill: #2F2725"><use xlink:href="#home"/></svg>
                         </a>
                     </li>
                     <li>
@@ -155,6 +201,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col Title">
+                        <label class="title page">Homepage</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col Title">
                         <label class="title">MAP</label>
                     </div>
                 </div>
@@ -181,16 +232,16 @@
                         <svg id="map" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 30" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
                             <line x1="-139.349701" y1="0" x2="139.349701" y2="0" transform="translate(148.755807 15)" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round"/>
                         </svg>
-                        <svg class="station" id="station1" fill="orange" viewBox="0 0 16 16">
+                        <svg class="station" id="station1" fill="#68CC3E" viewBox="0 0 16 16">
                             <use xlink:href="#station"/>
                         </svg>
-                        <svg class="station" id="station2" fill="orange" viewBox="0 0 16 16">
+                        <svg class="station" id="station2" viewBox="0 0 16 16">
                             <use xlink:href="#station"/>
                         </svg>
-                        <svg class="station" id="station3" fill="orange" viewBox="0 0 16 16">
+                        <svg class="station" id="station3" viewBox="0 0 16 16">
                             <use xlink:href="#station"/>
                         </svg>
-                        <svg class="station" id="station4" fill="orange" viewBox="0 0 16 16">
+                        <svg class="station" id="station4" viewBox="0 0 16 16">
                             <use xlink:href="#station"/>
                         </svg>
                         <svg id="agv1" class="agv" fill="blue" viewBox="0 0 14 14">
@@ -198,12 +249,68 @@
                         </svg>
                     </div>
                 </div>
+                <br />
                 <div class="row">
                     <div class="col Title">
                         <label class="title">AGV List</label>
                     </div>
                 </div>
-                <div id="agvList" class="row agvList"></div>
+                <div id="agvList" class="row agvList">
+                    <!-- <div class="col-4">
+                        <div class="row">
+                            <div class="col agvCard">
+                                <div class="row cardTop">
+                                    <div class="col cardInfo">
+                                        <div class="row" style="padding-top: 1.5%;">
+                                            <div class="col" style=" display: inline-flex;align-items: center;">
+                                                <p class="title AGVTitle" id="AGV3Title">AGV#3</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="AGVName" id="AGV3Name">250公斤潛盾頂舉型</p>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-3 cardImg">
+                                        <img class="img-fluid" style="width: 100%;" src="/YIDDemoRoom/image/agv_250.png" alt="image error">
+                                    </div>
+                                </div>
+                                <div class="row cardBottom">
+                                    <div id="agvStatus3" class="col AGVstatus normal">
+                                        <div class="dstatus working"></div>
+                                        <p class="agvStatus working">Working</p>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col signal">
+                                                <svg style="fill: #FFFFFF;" width="40" height="40">
+                                                    <use id="agvSignal3" xlink:href="#wifi-1"/>
+                                                </svg>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row cardBattery">
+                                                    <div class="col-6 canvas-wrap">
+                                                        <div>
+                                                            <svg fill="white" width="40" height="32">
+                                                                <use xlink:href="#battery-error"/>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                            <p class="col" id="battery3"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <br />
                 <div class="row">
                     <div class="col">
                         <div class="row">

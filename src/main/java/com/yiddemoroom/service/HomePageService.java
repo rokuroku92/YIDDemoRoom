@@ -1,10 +1,12 @@
 package com.yiddemoroom.service;
 
 import com.yiddemoroom.model.AGVId;
+import com.yiddemoroom.model.Mode;
 import com.yiddemoroom.model.Notification;
 import com.yiddemoroom.model.Station;
 import com.yiddemoroom.model.Task;
 import com.yiddemoroom.repository.AGVIdDao;
+import com.yiddemoroom.repository.ModeDao;
 import com.yiddemoroom.repository.NotificationDao;
 import com.yiddemoroom.repository.StationDao;
 import com.yiddemoroom.repository.TaskDao;
@@ -27,6 +29,8 @@ public class HomePageService {
     @Autowired
     private StationDao StationDao;
     
+    @Autowired
+    private ModeDao modeDao;
     
     public List<AGVId> queryAGVList(){
         return agvIdDao.queryAGVList();
@@ -44,6 +48,10 @@ public class HomePageService {
         return taskDao.queryAllTasks();
     }
     
+    public boolean updateTaskStatus(String taskNumber, int status){
+        return taskDao.updateTaskStatus(taskNumber, status);
+    }
+    
     public List<Notification> queryTodayNotifications(){
         return notificationDao.queryTodayNotifications();
     }
@@ -58,6 +66,14 @@ public class HomePageService {
     
     public List<Station> queryStations(){
         return StationDao.queryStations();
+    }
+    
+    public boolean cancelTask(String taskNumber){
+        return taskDao.cancelTask(taskNumber);
+    }
+    
+    public List<Mode> queryModes(){
+        return modeDao.queryModes();
     }
     
     

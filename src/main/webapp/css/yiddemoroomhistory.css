@@ -148,3 +148,14 @@
     min-height: 1em;
     font-size: 1em;
 }
+.taskstatus{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-family: NewFont, sans-serif;
+    font-size: 1.6em;
+}
+.taskstatus.canceled{color:#ff1919}
+.taskstatus.completed{color:#09b01f}
+.taskstatus.waiting{color:#a5a5a5}
+.taskstatus.executing{color:#e8c32d}

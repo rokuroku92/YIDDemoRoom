@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.yiddemoroom.model.AGV;
 import com.yiddemoroom.model.AGVId;
 import com.yiddemoroom.model.Analysis;
+import com.yiddemoroom.model.Mode;
 import com.yiddemoroom.model.Notification;
 import com.yiddemoroom.model.Station;
 import com.yiddemoroom.model.Task;
@@ -27,6 +28,7 @@ public class ApiController {
     private final Gson gson = new Gson();
     private static AGV[] agvs;
     private static List<Task> tasks;
+    private int iUpdate=0;
     
     @Autowired
     private HomePageService homePageService;
@@ -36,40 +38,52 @@ public class ApiController {
     
     @Autowired
     private SendTaskService sendTaskService;
+        /*
+        public String getJson() throws IOException { 
+            URL url = new URL("http://192.168.1.143:20100/cars");
+            String[] arr;
+            try (BufferedReader reader = new BufferedReader
+                            (new InputStreamReader(url.openStream()))) {
+                String line;
+                line = reader.readLine().replace("<br>","");
+                arr = line.split(",");
+            }
+            if(agv != null){
+                Place place = new Place(Integer.parseInt(arr[1]));
+    //            Place place = new Place(10);
+                Station station = new Station((tempId+2)%4,(tempId+1)%4,(tempId+0)%4,(tempId+2)%4,(tempId+1)%4,(tempId+3)%4,(tempId+2)%4,(tempId+0)%4,
+                    (tempId+1)%4,(tempId+0)%4,(tempId+0)%4,(tempId+1)%4,(tempId+3)%4,(tempId+0)%4,(tempId+1)%4);
+                agv.setStation(station);
+                agv.setPlace(place);
+                return new Gson().toJson(agv);
+            }
+            Place place = new Place(1001+tempId++%10);
+            Station station = new Station((tempId+2)%4,(tempId+1)%4,(tempId+0)%4,(tempId+2)%4,(tempId+1)%4,(tempId+3)%4,(tempId+2)%4,(tempId+0)%4,
+                    (tempId+1)%4,(tempId+0)%4,(tempId+0)%4,(tempId+1)%4,(tempId+3)%4,(tempId+0)%4,(tempId+1)%4);
+            List<Task> tasks = new ArrayList<>();
+            tasks.add(new Task("202301040001",1001,1006,6));
+            tasks.add(new Task("202301040002",1007,1002,2));
+            tasks.add(new Task("202301040003",1003,1008,8));
+            tasks.add(new Task("202301040004",1004,1012,12));
+            tasks.add(new Task("202301040005",1013,1005,5));
+            agv = new AGV();
+            agv.setStatus(1);
+            agv.setPlace(place);
+            agv.setTask("202301040001");
+            agv.setBattery(100);
+            agv.setStation(station);
+            agv.setTasks(tasks);
+
+            String jsonString = new Gson().toJson(agv);
+            System.out.println(jsonString);
+            return jsonString;              
+        }
+        */
+   
     
-    @RequestMapping(value = "/homepage/agvlist", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    @GetMapping(value = "/homepage/agvlist", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     public String getAGVList(){
         List<AGVId> list = homePageService.queryAGVList();
-        return gson.toJson(list);
-    }
-    
-    @RequestMapping(value = "/homepage/task/today", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getTodayTask(){
-        List<Task> list = homePageService.queryTodayTasks();
-        return gson.toJson(list);
-    }
-    
-    @RequestMapping(value = "/homepage/task/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getAllTask(){
-        List<Task> list = homePageService.queryAllTasks();
-        return gson.toJson(list);
-    }
-    
-    @RequestMapping(value = "/homepage/notification/today", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getTodayNotification(){
-        List<Notification> list = homePageService.queryTodayNotifications();
-        return gson.toJson(list);
-    }
-    
-    @RequestMapping(value = "/homepage/notification/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getAllNotification(){
-        List<Notification> list = homePageService.queryAllNotifications();
-        return gson.toJson(list);
-    }
-    
-    @RequestMapping(value = "/homepage/stations", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-    public String getStations(){
-        List<Station> list = homePageService.queryStations();
         return gson.toJson(list);
     }
     
@@ -78,6 +92,51 @@ public class ApiController {
 //            tasks = homePageService.queryTodayTasks();
         tasks = homePageService.queryAllTasks();
         return gson.toJson(tasks);
+    }
+    
+    @GetMapping(value = "/homepage/tasks/today", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getTodayTask(){
+        List<Task> list = homePageService.queryTodayTasks();
+        return gson.toJson(list);
+    }
+    
+    @GetMapping(value = "/homepage/tasks/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getAllTask(){
+        List<Task> list = homePageService.queryAllTasks();
+        return gson.toJson(list);
+    }
+    
+    @GetMapping(value = "/homepage/notification/today", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getTodayNotification(){
+        List<Notification> list = homePageService.queryTodayNotifications();
+        return gson.toJson(list);
+    }
+    
+    @GetMapping(value = "/homepage/notification/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getAllNotification(){
+        List<Notification> list = homePageService.queryAllNotifications();
+        return gson.toJson(list);
+    }
+    
+    @GetMapping(value = "/homepage/stations", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    public String getStations(){
+        List<Station> list = homePageService.queryStations();
+        return gson.toJson(list);
+    }
+    
+    @GetMapping(value = "/homepage/modes", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    public String getModes(){
+        List<Mode> list = homePageService.queryModes();
+        return gson.toJson(list);
+    }
+    
+    @GetMapping(value = "/homepage/iupdatetn", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String iUpdateTaskAndNotification(){
+        if(iUpdate>0){
+            iUpdate=0;
+            return "Yes";
+        }else
+            return "No";
     }
     
     static int tempId;
@@ -95,7 +154,8 @@ public class ApiController {
         int day = currentDate.getDayOfMonth();
 
         for(int i=0;i<3;i++){
-            agvs[i].setStatus((int) (Math.random() * 10) % 3);
+//            agvs[i].setStatus((int) (Math.random() * 10) % 3);
+            agvs[i].setStatus(0);
             agvs[i].setPlace("Station"+(tempId++%4+1));
             agvs[i].setTask("#"+year+month+day+String.format("%04d", tempId-3));
             agvs[i].setBattery(100-tempId%100);
@@ -104,24 +164,19 @@ public class ApiController {
         }
         
         String jsonString = new Gson().toJson(agvs);
-        System.out.println(jsonString);
+//        System.out.println(jsonString);
         return jsonString;
     }
     
-//    @RequestMapping(value = "/analysis/all", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public String findAnalysisAll(){
-//        List<Analysis> list = analysisService.queryAnalysises();
-//        return gson.toJson(list);
-//    }
     
-    @RequestMapping(value = "/analysis/yyyymm", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/analysis/yyyymm", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAnalysisesYearsAndMonths(){
         List<Map<String, Object>> list = analysisService.getAnalysisesYearsAndMonths();
         return gson.toJson(list);
     }
     // 範例路徑 /analysis/mode?agvId=1&value=202212
-    // 範例路徑 /analysis/mode?agvId=1&value=202301
-    // 範例路徑 /analysis/mode?agvId=1&value=recently
+    // 範例路徑 /analysis/mode?agvId=2&value=202301
+    // 範例路徑 /analysis/mode?agvId=3&value=recently
     @RequestMapping(value = "/analysis/mode", produces = MediaType.APPLICATION_JSON_VALUE)
     public String queryAnalysisesByAGVAndYearAndMonth(@RequestParam("value") String value, @RequestParam("agvId") Integer agvId){
         // value=202212, 202301, recently
@@ -143,10 +198,16 @@ public class ApiController {
         return gson.toJson(list);
     }
     
-    @RequestMapping(value = "/sendTask", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/sendTask", produces = MediaType.TEXT_PLAIN_VALUE)
     public String sendTask(@RequestParam("agv") String agv, @RequestParam("start") String start,
                             @RequestParam("terminal") String terminal, @RequestParam("mode") String mode, @RequestParam("time") String time){
         return sendTaskService.insertTask(time, agv, start, terminal, mode) ? "OK" : "FAIL";
+    }
+    
+    @RequestMapping(value = "/cancelTask", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String cancelTask(@RequestParam("taskNumber") String taskNumber){
+        System.out.println("taskNumber: "+taskNumber);
+        return homePageService.cancelTask(taskNumber) ? "OK" : "FAIL";
     }
     /*
     static int tempId;

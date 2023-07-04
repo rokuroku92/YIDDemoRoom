@@ -27,6 +27,8 @@ public class SendTaskService {
             // 伺服器重啟
             lastDate = lastTaskNumber.substring(1, 9);
         }
+        System.out.println("lastDate: "+lastDate);
+        System.out.println("time.substring(0, 8): "+time.substring(0, 8));
         if (!lastDate.equals(time.substring(0, 8))){
             serialNumber = 1;
             lastDate = time.substring(0, 8);
@@ -37,6 +39,8 @@ public class SendTaskService {
         }
         String taskNumber = "#" + lastDate + String.format("%04d", serialNumber);
         
-        return taskDao.insertTask(taskNumber, time, agv, start, terminal, mode);
+        return ("".equals(start)) ? 
+                taskDao.insertTaskNoStart(taskNumber, time, agv, terminal, mode) : 
+                taskDao.insertTask(taskNumber, time, agv, start, terminal, mode);
     }
 }

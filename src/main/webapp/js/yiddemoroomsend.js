@@ -56,12 +56,12 @@ function addStationList(stationList){
     var startListHTML="";
     var terminalListHTML="";
     for(let i=0;i<stationList.length;i++){
-        startListHTML += '<div data-id="'+stationList[i].tag+'" class="col-auto sendCard station start" onclick="select(this)">' +
+        startListHTML += '<div data-id="'+stationList[i].id+'" class="col-auto sendCard station start" onclick="select(this)">' +
                          '<div class="row"><div class="col cardInfo"><div class="row"><div class="col"><p class="title stationTitle">' +
                          stationList[i].name + '</p></div></div><div class="row"><div class="col"><p class="stationContent">' +
                          stationList[i].memo + '</p></div></div></div></div></div>';
 
-        terminalListHTML += '<div data-id="'+stationList[i].tag+'" class="col-auto sendCard station terminal" onclick="select(this)">' +
+        terminalListHTML += '<div data-id="'+stationList[i].id+'" class="col-auto sendCard station terminal" onclick="select(this)">' +
                             '<div class="row"><div class="col cardInfo"><div class="row"><div class="col"><p class="title stationTitle">' +
                             stationList[i].name + '</p></div></div><div class="row"><div class="col"><p class="stationContent">' +
                             stationList[i].memo + '</p></div></div></div></div></div>';
@@ -92,7 +92,7 @@ function select(obj){
                 sendContent.terminal = obj.getAttribute("data-id");
                 break;
             case "mode":
-                sendContent.mode = obj.getAttribute("id");
+                sendContent.mode = obj.getAttribute("data-id");
                 objColor = "#C9C9C9"
                 break;
             default:
@@ -124,8 +124,9 @@ function sendTask(){
             if(this.responseText == 'OK')
                 alert("成功發送任務\n"+cnt);
             else
-                alert("發送任務失敗");
-        }
+                alert("發送任務失敗，可能是格式錯誤");
+        }else
+            alert("發送任務失敗");
     };
     window.location.reload();
     // console.log("Send Task contants:");

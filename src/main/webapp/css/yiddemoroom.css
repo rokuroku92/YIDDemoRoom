@@ -2,31 +2,37 @@
     overflow: auto;
     min-height: 15em;
     max-height: 25em;
-    margin-left: 1.6em;
-    margin-right: 1em;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin: 1em;
     border-radius: 0.6rem!important;
-    padding: 10px;
     padding-left: 0px;
     padding-right: 0px;
-    background-color: #303030;
+    background-color: #3E3A39;
+    /* background-color: #303030; */
 }
 .task{
     min-width: 685px;
-    margin: 0.6em;
+    margin: 1.5em;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+    height: 3em;
 }
 .agvTask{
-    background-color: #5C5C5C;
+    background-color: #3E3A39;
+    /* background-color: #303030; */
+    /* border-style:solid; */
+    /* border-color: #5C5C5C; */
+    /* border-width: 2px!important; */
     color: #FFFFFF;
     width: 100%;
-    height: 3em;
     border-radius: 0.6rem!important;
     text-align: left;
+    padding: 0px;
 }
 .agvTask .row{
+    margin: 0px;
+    padding: 0px;
+}
+.agvTask .row .col{
     margin: 0px;
     padding: 0px;
 }
@@ -62,8 +68,11 @@
     font-size: 0.85em;
     padding-right: 0.4em;
 }
+.datetime{
+    padding: 0px;
+}
 .taskTB{
-    padding-top: 1.5%!important;
+    padding-top: 0.3em!important;
     font-size: 0.8em;
 }
 .right{
@@ -77,22 +86,22 @@
     max-height: 25em;
     overflow: auto;
     margin: 1em;
-    margin: 1.6em;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
     border-radius: 0.6rem!important;
-    background-color: #FFFFFF;
-    padding: 10px;
+    background-color: #3E3A39;
+    /* background-color: #303030; */
 }
 #notification .row{
     margin-top: 0.5em;
     margin-bottom: 0.5em; 
+    height: 3em;
 }
 .message{
     margin-left: 0.6em;
     margin-right: 0.6em;
-    background-color: #EDEDED;
-    height: 3em;
+    padding-left: 0.9em;
+    padding-right: 0.9em;
+    background-color: #3E3A39;
+    /* background-color: #303030; */
     width: 100%;
     display: flex;
     align-items: center;
@@ -117,9 +126,10 @@
     background-color: #FF0000;
 }
 .messageContent{
-    width: 100%;
+    width: 90%;
     padding-left: 3%;
     text-align: left;
+    color: #FFFFFF;
 }
 .messageContent label{
     display: inline;
@@ -147,6 +157,9 @@
     letter-spacing: 0.1em;
     float: left;
 }
+.title.page{
+    font-size: 2em;
+}
 .title.AGVTitle{
     display: flex;
     margin: 0px;
@@ -167,7 +180,7 @@
     margin: 0px;
     text-align: left;
     font-size: 1.6em;
-    color: #000000;
+    color: #FFFFFF;
 }
 .AGVstatus{
     height: 90%;
@@ -195,10 +208,10 @@
     height: 100%;
     width: 0.6em;
     border-radius: 0 0.6rem 0.6rem 0;
-    margin-right: calc(var(--bs-gutter-x) - 0.6em);
+    margin-right: calc(var(--bs-gutter-x) - 0.3em);
 }
 .dstatus.working{
-    background-color: #68CC3E;
+    background-color: #7CBD42;
 }
 .dstatus.obstacle{
     background-color: #EAC343;
@@ -213,41 +226,23 @@
 .agvStatus.working{color: #68CC3E;}
 .agvStatus.obstacle{color: #EAC343;}
 .cover-fit{
-    position: absolute;
-    top: -5%;
-    width: 100%;
-    height: 100%;
+    transform: translate(0%, -10%);
 }
-.canvas-wrap p{
-    position: absolute;
-    top: 27%;
-    left: 85%;
-    max-width: 50%;
-    max-height: 50%;
-    font-size: 1.2em;
+.canvas-wrap{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    padding: 0px;
 }
 .batteryLabel{
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    max-width: 50%;
-    max-height: 50%;
     font-size: 0.8em;
+    color: #FFFFFF;
+    transform: translate(0%, -10%);
 }
-.signalLabel{
-    position: absolute;
-    top: 80%;
-    left: 47%;
-    max-width: 50%;
-    max-height: 50%;
-    font-size: 0.8em;
-}
-.wifi{
-    position: absolute;
-    top: 24%;
-    left: 55%;
-    max-width: 60%;
-    max-height: 60%;
+.signal{
+    display: flex;
+    justify-content: right;
+    align-items: center;
 }
 .statusBar{
     border-radius: 1.8rem!important;
@@ -269,35 +264,48 @@
 .agvList{
     padding: 0.5em;
     padding-left: 1em;
-    padding-right: 1em;
+    /* padding-right: 1em; */
+    padding-right: 0px;
     color: #000000;
 }
 .agvCard{
+    margin-right: 1em;
     height: 15em;
-    background-color: white;
-    border: 1px black solid;
+    background-color: #3E3A39;
+    /* background-color: #303030; */
     border-radius: 0.6rem!important;
 }
-.cardTop{height: 70%;}
+.cardTop{
+    height: 70%;
+    padding: 3%;
+}
 .cardBottom{
     height: 30%;
     padding-top: 1.3%;
-    padding-bottom: 1.3%;
+    padding-bottom: 3%;
+}
+.cardBottom .col{
+    height: 100%;
+}
+.cardBottom .col .row{
+    height: 100%;
+}
+.cardBottom .col .row .col-6{
+    height: 100%;
 }
 .cardInfo{height:100%;display: grid;}
 .cardImg{padding: 0px;}
-.ratio.cardBattery{
-    height: 3em;
-    min-height: 3em;
-    margin: 0.2em;
-    margin-right: 100%;
-    margin-bottom: 15%;
+.cardBattery{
+    color: #FFFFFF;
 }
-.ratio.cardSignal{
-    height: 3em;
-    margin: 0.2em;
-    margin-right: 100%;
-    margin-bottom: 15%;
+.cardBattery .col-6{
+    padding: 0px;
+}
+.cardBattery p{
+    display: flex; 
+    text-align: left; 
+    align-items: center;
+    padding: 0px;
 }
 .statusBarObjCircle{
     margin: 0.1em;
@@ -356,18 +364,19 @@
     background-color: lime;
 }
 .map{
-    margin: 2em;
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
-    border: 1px white solid;
+    /* border: 1px white solid; */
+    margin-left: 1em;
+    margin-right: 1em;
     border-radius: 0.6rem!important;
     position: relative;
+    background-color: #3E3A39;
 }
 .station {
     position: absolute;
     width: 2vw; /* 使用vw（視窗寬度的百分比）來定義寬度 */
     height: 2vw; /* 使用vw（視窗寬度的百分比）來定義高度 */
     transition: transform 0.3s ease;
+    fill: #7CBD42;
 }
 .agv {
     position: absolute;

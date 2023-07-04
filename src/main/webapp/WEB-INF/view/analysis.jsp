@@ -61,7 +61,7 @@
             </symbol>
         </svg>
         <main>
-            <div class="d-flex flex-column flex-shrink-0 bg-dark" style="width: 5em;min-height: 100%;position: fixed;">
+            <div class="d-flex flex-column flex-shrink-0" style="width: 5em;min-height: 100%;position: fixed;">
                 <a href="https://www.yid.com.tw/" class="d-block p-3 link-dark text-center">
                     <svg class="bi" width="32" height="32"><use xlink:href="#yid"/></svg>
                     <span class="visually-hidden">Icon-only</span>
@@ -167,14 +167,14 @@
                     </div>
                 </div>
                 <div class="row" style=" justify-content: center;padding-top: 1.5em;">
-                    <div class="col-11" style="background-color: #303030;border-radius: 0.6rem!important;">
+                    <div class="col-11" style="background-color: #3E3A39;border-radius: 0.6rem!important;">
                         <div id="legend-container"></div>
                         <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
                     </div>
                 </div>
                 <hr size="4px" align="center" width="100%" color="white">
                 <div class="row" style="justify-content: center;">
-                    <div id="summ" class="col-11" style="background-color: #303030;border-radius: 0.6rem!important;">
+                    <div id="summ" class="col-11" style="background-color: #3E3A39;border-radius: 0.6rem!important;">
                         <table class="table table-borderless" style=" align-items: center;text-align: center;color: #9E9E9E;">
                             <thead>
                                 <tr>

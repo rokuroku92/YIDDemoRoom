@@ -72,15 +72,25 @@ function addTasks(tasks){  // 更新資料
         var minute = datetime.substring(10, 12);
         var second = datetime.substring(12, 14);
         var st;
+        var status;
         if(tasks[i].startId)
             st = stations[tasks[i].startId-1].name;
         else 
             st= 'undefined';
+
+        if(tasks[i].status == -1)
+            status = "canceled";
+        else if(tasks[i].status == 100)
+            status= 'completed';
+        else if(tasks[i].status == 0)
+            status= 'waiting';
+        else
+            status= 'executing';
         tasksHTML += "<div class=\"row task\"><div class=\"col agvTask\"><div class=\"row\"><div class=\"col\"><div class=\"row taskTitle\"><div class=\"col\">" +
                     "<p>"+tasks[i].taskNumber+"</p></div></div><div class=\"row taskContent\"><div class=\"col\">" +
                     "<p>AGV: "+agvList[tasks[i].agvId-1].name+"</p><p>Start: "+st+"</p><p>End: "+stations[tasks[i].terminalId-1].name+"</p><p>Mode: "+ tasks[i].modeId +"</p></div></div></div><div class=\"col-6\"><div class=\"row taskTB\">" +
-                    "<div class=\"col-10\"><div class=\"row\"><div class=\"col\"><labe class=\"right\">"+year+"/"+month+"/"+day+"</label></div></div><div class=\"row\">" +
-                    "<div class=\"col\"><label class=\"right\">"+hour+":"+minute+":"+second+"</label></div></div></div><div class=\"col-2\"><button type=\"button\" onclick=\"alert(\'remove: "+tasks[i].taskNumber+"\')\" class=\"btn btn-danger right\">" +
+                    "<div class=\"col-10\"><div class=\"row\"><div class=\"col taskstatus "+ status +"\">"+ status +"</div><div class=\"col\"><div class=\"row\"><div class=\"col\"><labe class=\"right\">"+year+"/"+month+"/"+day+"</label></div></div><div class=\"row\">" +
+                    "<div class=\"col\"><label class=\"right\">"+hour+":"+minute+":"+second+"</label></div></div></div></div></div><div class=\"col-2\"><button type=\"button\" onclick=\"cancelTask(\'"+tasks[i].taskNumber+"\')\" class=\"btn btn-danger right\">" +
                     "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" style=\"fill: white;\"><use xlink:href=\"#trash\"/></svg></button></div></div></div></div></div></div>";
     }
     document.getElementById("taskQueue").innerHTML = tasksHTML;
@@ -134,4 +144,20 @@ function addNotifications(notifications){  // 更新資料
                     '<label>'+notifications[i].title+'</label><p>'+notifications[i].content+'</p><div class="right">'+year+"/"+month+"/"+day+'&nbsp;'+hour+":"+minute+":"+second+'</div></div></div></div>';
     }
     document.getElementById("notification").innerHTML = notificationsHTML;
+}
+
+function cancelTask(taskNumber){
+    xhr.open('GET', baseUrl + "/api/cancelTask?taskNumber=%23" + taskNumber.slice(1), true);
+    xhr.send();
+    xhr.onload = function(){
+        if(xhr.status == 200){
+            if(this.responseText == 'OK')
+                alert("成功取消任務: ", taskNumber);
+            else
+                alert("取消任務失敗，可能是格式錯誤");
+        }else
+            alert("取消任務失敗");
+        window.location.reload();
+    };
+
 }

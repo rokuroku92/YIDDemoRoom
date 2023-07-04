@@ -53,7 +53,7 @@
             </symbol>
         </svg>
         <main>
-            <div class="d-flex flex-column flex-shrink-0 bg-dark" style="width: 5em;min-height: 100%;position: fixed;">
+            <div class="d-flex flex-column flex-shrink-0" style="width: 5em;min-height: 100%;position: fixed;">
                 <a href="https://www.yid.com.tw/" class="d-block p-3 link-dark text-center">
                     <svg class="bi" width="32" height="32"><use xlink:href="#yid"/></svg>
                     <span class="visually-hidden">Icon-only</span>
@@ -324,13 +324,13 @@
                 </div>
 
                 <div class="row sendList">
-                    <div id="transport" class="col-auto sendCard mode" onclick="select(this)">
+                    <div data-id="1" class="col-auto sendCard mode" onclick="select(this)">
                         <p class="modeContent">transport</p>
                     </div>
-                    <div id="call" class="col-auto sendCard mode" onclick="select(this)">
+                    <div data-id="2" class="col-auto sendCard mode" onclick="select(this)">
                         <p class="modeContent">Call</p>
                     </div>
-                    <div id="mode3" class="col-auto sendCard mode" onclick="select(this)">
+                    <div data-id="3" class="col-auto sendCard mode" onclick="select(this)">
                         <p class="modeContent">Mode3</p>
                     </div>
                 </div>

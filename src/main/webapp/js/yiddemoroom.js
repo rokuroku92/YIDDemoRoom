@@ -4,6 +4,7 @@ var agvList;
 // var stations = {1: 'Station1', 2: 'Station2', 3: 'Station3', 4: 'Station4'};
 // taskprogress <div class=\"progress\"><div id=\"taskProgress"+tasks[i].taskNumber+"\" class=\"progress-bar\" /*style=\"width: 30%;\"*/></div></div>
 var stations;
+var modes;
 var agvListImg = {1: "agv_250.png", 2: "agv_250.png", 3: "agv_250.png"};
 window.onresize =  function(){
     setWindow();
@@ -17,8 +18,9 @@ window.onload = async function(){
     // updateAGVPositions();
     try {
         await setAGVList();
-        await setAGVListBatteryChart();
+        // await setAGVListBatteryChart();
         await getStations();
+        await getModes();
         await setTasks();
         await setNotifications();
     } catch (error) {
@@ -28,7 +30,7 @@ window.onload = async function(){
 
     // 更新資料
     updateAGVStatus();  //  取得狀態資料
-    setInterval(updateAGVStatus, 1000);  //  每秒更新
+    setInterval(updateAGVStatus, 5000);  //  每秒更新
 };
 
 function setWindow(){
@@ -52,21 +54,34 @@ function updateAGVStatus() {
         }
     };
 }
+
 function agvUpdate(agvStatus){  // 更新資料
     for(let i=0;i<agvStatus.length;i++){ // agv遍歷
         // 更新電量百分比
         var batteryString = "battery"+(i+1);
         document.getElementById(batteryString).innerHTML = agvStatus[i].battery+"%";  
-
+        // 更新電量
+        batteryString = "agvBattery"+(i+1);
+        var agvBattery = document.getElementById(batteryString);
+        agvStatus[i].charging == 0 ? agvBattery.setAttribute("xlink:href", "#battery-charging") :
+            agvStatus[i].battery > 80 ? agvBattery.setAttribute("xlink:href", "#battery-4") : 
+            agvStatus[i].battery > 60 ? agvBattery.setAttribute("xlink:href", "#battery-3") :
+            agvStatus[i].battery > 40 ? agvBattery.setAttribute("xlink:href", "#battery-2") :
+            agvStatus[i].battery > 20 ? agvBattery.setAttribute("xlink:href", "#battery-1") :
+            agvStatus[i].battery > 0 ? agvBattery.setAttribute("xlink:href", "#battery-0") :
+            agvBattery.setAttribute("xlink:href", "#battery-error");
         // 更新電量圓餅圖
+        /* 20230703已改為使用電量svg
         var updateBattery = [agvStatus[i].battery, 100-agvStatus[i].battery]; 
         var agvBatteryChart = Chart.instances[i];
         if(agvStatus[i].battery < 50)
-            agvBatteryChart.data.datasets[0].backgroundColor = ['rgb(255, 0, 0)','rgb(26, 28, 30)'];
+            agvBatteryChart.data.datasets[0].backgroundColor = ['rgb(255, 0, 0)','rgb(255, 255, 255)'];
         else
-            agvBatteryChart.data.datasets[0].backgroundColor = ['rgb(118, 212, 114)','rgb(26, 28, 30)'];
+            agvBatteryChart.data.datasets[0].backgroundColor = ['rgb(118, 212, 114)','rgb(255, 255, 255)'];
         agvBatteryChart.data.datasets[0].data = updateBattery;
         agvBatteryChart.update();
+        */
+
 
         // 更新信號強度
         var signalString = "agvSignal"+(i+1);
@@ -77,20 +92,21 @@ function agvUpdate(agvStatus){  // 更新資料
             agvSignal.setAttribute("xlink:href", "#wifi-1");
         
         // 更新AGV狀態
+        // agvStatus[i].task(任務號碼)未使用
         document.getElementById('agvStatus'+(i+1)).classList.remove('error');
         document.getElementById('agvStatus'+(i+1)).classList.remove('normal');
         switch (agvStatus[i].status) {
             case 0:
                 document.getElementById('agvStatus'+(i+1)).classList.add('normal');
-                document.getElementById('agvStatus'+(i+1)).innerHTML = '<div class="dstatus working"></div><p class="agvStatus working">Working'+agvStatus[i].task+'</p>';
+                document.getElementById('agvStatus'+(i+1)).innerHTML = '<div class="dstatus working"></div><p class="agvStatus working">Working</p>';
                 break;
             case 1:
                 document.getElementById('agvStatus'+(i+1)).classList.add('normal');
-                document.getElementById('agvStatus'+(i+1)).innerHTML = '<div class="dstatus obstacle"></div><p class="agvStatus obstacle">Obstacle'+agvStatus[i].task+'</p>';
+                document.getElementById('agvStatus'+(i+1)).innerHTML = '<div class="dstatus obstacle"></div><p class="agvStatus obstacle">Obstacle</p>';
                 break;
             case 2:
                 document.getElementById('agvStatus'+(i+1)).classList.add('error');
-                document.getElementById('agvStatus'+(i+1)).innerHTML = '<p class="agvStatus error" id="agvStatus1">Error'+agvStatus[i].task+'</p>';
+                document.getElementById('agvStatus'+(i+1)).innerHTML = '<p class="agvStatus error" id="agvStatus1">Error</p>';
                 break;
             default:
                 break;
@@ -98,7 +114,26 @@ function agvUpdate(agvStatus){  // 更新資料
 
         // 更新AGV位置
         updateAGVPositions(agvStatus[i].place);
+
+        updateTN();
     }
+}
+
+function updateTN() {
+    xhr.open('GET', baseUrl + "/api/homepage/iupdatetn", true);
+    xhr.send();
+    xhr.onload = async function(){
+        if(xhr.status == 200){
+            if(this.responseText == "Yes"){
+                try {
+                    await setTasks();
+                    await setNotifications();
+                } catch (error) {
+                    console.error("Reload Task and Notification error: ", error);
+                }
+            }
+        }
+    };
 }
 
 function setAGVList() {
@@ -119,27 +154,21 @@ function setAGVList() {
 
 function addAGVList(agvList){  // 更新資料
     var agvListHTML = "";
-    var html1 = '<div class="col-4 gx-5"><div class="row"><div class="col agvCard"><div class="row cardTop"><div class="col cardInfo"><div class="row" style="padding-top: 1.5%;"><div class="col" style=" display: inline-flex;align-items: center;">';
-    var html2 = '</div></div><div class="row"><div class="col">';
-    var html3 = '</div></div><div class="row align-self-end" style="padding-bottom: 1%;"><div class="col-2" style="margin-right: 1em;"><div class="ratio ratio-1x1 cardBattery"><div class="canvas-wrap">';
-    var html4 = '</div><label class="batteryLabel">Battery</label></div></div><div class="col-2"><div class="ratio ratio-1x1 cardSignal"><svg style="fill: #000000;" class="bi bi-wifi-off wifi" width="16" height="16" viewBox="0 0 16 16">';
-    var html5 = '<label class="signalLabel">Signal</label></div></div></div></div><div class="col-3 cardImg">';
-    var html6 = '</div></div><div class="row cardBottom">';
-    var html7 = '</div></div></div></div></div>';
 // "<div class="dstatus obstacle"></div>
 //                     <p class="agvStatus obstacle">obstacle</p>
     for(let i=0;i<agvList.length;i++){
-        agvListHTML += html1 + '<p class="title AGVTitle" id="AGV'+(i+1)+'Title">'+agvList[i].name+'</p>' +
-                       html2 + '<p class="AGVName" id="AGV'+(i+1)+'Name">'+agvList[i].memo+'</p>' +
-                       html3 + '<canvas class="cover-fit" id="AGV_battery_'+(i+1)+'"></canvas><p id="battery'+(i+1)+'"></p>' +
-                       html4 + '<use id="agvSignal'+(i+1)+'" xlink:href="#wifi-unconnect"/></svg>' +
-                       html5 + '<img class="img-fluid" style="width: 100%;" src="'+contextPath+'/image/'+agvListImg[agvList[i].id]+'" alt="image error">' +
-                       html6 + '<div id="agvStatus'+(i+1)+'" class="col AGVstatus">' + html7;
+        agvListHTML += '<div class="col-4"><div class="row"><div class="col agvCard"><div class="row cardTop"><div class="col cardInfo"><div class="row" style="padding-top: 1.5%;"><div class="col" style=" display: inline-flex;align-items: center;">'+
+                        '<p class="title AGVTitle" id="AGV'+(i+1)+'Title">'+agvList[i].name+'</p></div></div><div class="row"><div class="col">'+
+                        '<p class="AGVName" id="AGV'+(i+1)+'Name">'+agvList[i].memo+'</p></div></div></div><div class="col-5 cardImg"><img class="img-fluid" style="width: 100%;" src="'+contextPath+'/image/'+agvListImg[agvList[i].id]+'" alt="image error"></div></div><div class="row cardBottom">'+
+                        '<div id="agvStatus'+(i+1)+'" class="col AGVstatus normal"><div class="dstatus working"></div><p class="agvStatus working">Working</p></div><div class="col"><div class="row"><div class="col signal"><svg style="fill: #FFFFFF;transform: translate(0%, -10%) rotateY(180deg);" width="40" height="40">'+
+                        '<use id="agvSignal'+(i+1)+'" xlink:href="#wifi-unconnect"/></svg></div><div class="col"><div class="row cardBattery"><div class="col-6 canvas-wrap"><div><svg fill="white" width="40" height="32">'+
+                        '<use id="agvBattery'+(i+1)+'" xlink:href="#battery-error"/></svg></div></div><div class="col-6">'+
+                        '<p class="col" id="battery'+(i+1)+'"></p></div></div></div></div></div></div></div></div></div>';
     }
     document.getElementById("agvList").innerHTML = agvListHTML;
 }
 
-function setAGVListBatteryChart() {
+function setAGVListBatteryChart() { // 20230703已停止使用
     return new Promise((resolve, reject) => {
         try {
             for(let i=0;i<agvList.length;i++){
@@ -181,7 +210,23 @@ function getStations() {
         xhr.onload = function(){
             if(xhr.status == 200){
                 stations = JSON.parse(this.responseText);
-                console.log(stations);
+                // console.log(stations);
+                resolve(); // 解析成功时，将 Promise 设置为已完成状态
+            }else {
+                reject(new Error('起始站點資訊獲取失敗')); // 解析失败时，将 Promise 设置为拒绝状态
+            }
+        };
+    });
+}
+
+function getModes() {
+    return new Promise((resolve, reject) => {
+        xhr.open('GET', baseUrl + "/api/homepage/modes", true);
+        xhr.send();
+        xhr.onload = function(){
+            if(xhr.status == 200){
+                modes = JSON.parse(this.responseText);
+                // console.log(mode);
                 resolve(); // 解析成功时，将 Promise 设置为已完成状态
             }else {
                 reject(new Error('起始站點資訊獲取失敗')); // 解析失败时，将 Promise 设置为拒绝状态
@@ -193,7 +238,7 @@ function getStations() {
 function setTasks() {
     return new Promise((resolve, reject) => {
         // xhr.open('GET', baseUrl + "/api/homepage/task/today", true);
-        xhr.open('GET', baseUrl + "/api/homepage/tasks", true);
+        xhr.open('GET', baseUrl + "/api/homepage/tasks/today", true);
         xhr.send();
         xhr.onload = function(){
             if(xhr.status == 200){
@@ -225,12 +270,12 @@ function addTasks(tasks){  // 更新資料
                 st = stations[tasks[i].startId-1].name;
             else 
                 st= 'undefined';
-            tasksHTML += "<div class=\"row task\"><div class=\"col agvTask\"><div class=\"row\"><div class=\"col\"><div class=\"row taskTitle\"><div class=\"col\">" +
+            tasksHTML += "<div class=\"row task\"><div class=\"col agvTask\"><div class=\"row\"><div class=\"col-8\"><div class=\"row taskTitle\"><div class=\"col\">" +
                         "<p>"+tasks[i].taskNumber+"</p></div></div><div class=\"row taskContent\"><div class=\"col\">" +
-                        "<p>AGV: "+agvList[tasks[i].agvId-1].name+"</p><p>Start: "+st+"</p><p>End: "+stations[tasks[i].terminalId-1].name+"</p></div></div></div><div class=\"col-6\"><div class=\"row taskTB\">" +
-                        "<div id=progressDiv\"tasks[i].taskNumber\" class=\"col-5 taskBar\"></div><div class=\"col-5\"><div class=\"row\"><div class=\"col\"><labe class=\"right\">"+year+"/"+month+"/"+day+"</label></div></div><div class=\"row\">" +
-                        "<div class=\"col\"><label class=\"right\">"+hour+":"+minute+":"+second+"</label></div></div></div><div class=\"col-2\"><button type=\"button\" onclick=\"alert(\'remove: "+tasks[i].taskNumber+"\')\" class=\"btn btn-danger right\">" +
-                        "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" style=\"fill: white;\"><use xlink:href=\"#trash\"/></svg></button></div></div></div></div></div></div>";
+                        "<p>AGV: "+agvList[tasks[i].agvId-1].name+"</p><p>Start: "+st+"</p><p>End: "+stations[tasks[i].terminalId-1].name+"</p>"+
+                        "<p>Mode: "+modes[tasks[i].modeId-1].name+"</p></div></div></div><div class=\"col\"><div class=\"row taskTB\">" +
+                        "<div id=\"progressDiv"+tasks[i].taskNumber+"\" class=\"col-7 taskBar\"></div><div class=\"col-5 datetime\"><div class=\"row\"><div class=\"col\"><labe class=\"right\">"+year+"/"+month+"/"+day+"</label></div></div><div class=\"row\">" +
+                        "<div class=\"col\"><label class=\"right\">"+hour+":"+minute+":"+second+"</label></div></div></div></div></div></div></div></div>";
         }
     }
     document.getElementById("taskQueue").innerHTML = tasksHTML;
@@ -311,4 +356,20 @@ function updateAGVPositions(station) {
 
     // document.getElementById("agv1").style.transform = "translate(" + (-mapWidth*(0.9765))+"px, "+stationHeight+"px) rotate(90deg)";
     document.getElementById("agv1").style.transform = "translate(" + (-mapWidth*(0.05+place*0.309))+"px, "+stationHeight+"px) rotate(90deg)";
+}
+
+function cancelTask(taskNumber){
+    xhr.open('GET', baseUrl + "/api/cancelTask?taskNumber=%23" + taskNumber.slice(1), true);
+    xhr.send();
+    xhr.onload = function(){
+        if(xhr.status == 200){
+            if(this.responseText == 'OK')
+                alert("成功取消任務: ", taskNumber);
+            else
+                alert("取消任務失敗，可能是格式錯誤");
+        }else
+            alert("取消任務失敗");
+        window.location.reload();
+    };
+
 }
